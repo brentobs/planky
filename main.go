@@ -3,11 +3,13 @@ package main
 import (
 	"fmt"
 	"os"
+
 	// "strings"
 	"time"
 
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
+
 	// "github.com/muesli/reflow/indent"
 	"github.com/muesli/termenv"
 )
@@ -26,29 +28,11 @@ var (
 
 var helpStyle = lipgloss.NewStyle().Foreground(lipgloss.Color("#626262")).Render
 
-var languages = []string{"Python", "NodeJS", "Java", "Go"}
-var pythonTypes = []string{"FastAPI", "Django", "CLI"}
-var nodeTypes = []string{"Express", "NestJS", "CLI"}
-var javaTypes = []string{"Spring", "Bla", "CLI"}
-var goTypes = []string{"a", "b", "CLI"}
-var languageTypes = map[string][]string{
-    "Python": {"FastAPI", "Django", "CLI"},
-    "NodeJS": {"Express", "NestJS", "CLI"},
-    "Java":   {"Spring", "Bla", "CLI"},
-    "Go":     {"a", "b", "CLI"},
-}
 
 type tickMsg time.Time
 
-// type model struct {
-// 	LangChoice   int
-// 	LangChosen   bool
-// 	TypeChoice   int
-// 	TypeChosen   bool
-// 	Quitting bool
-// }
-
 func main() {
+
 	initialModel := model{
     LangChoice: 0,
 		LangChosen: false,
@@ -61,6 +45,32 @@ func main() {
 		fmt.Println("could not start program:", err)
 		os.Exit(1)
 	}
+}
+
+
+func checkbox(label string, checked bool) string {
+	if checked {
+		return colorFg("[x] "+label, "212")
+	}
+	return fmt.Sprintf("[ ] %s", label)
+}
+
+// Utils
+
+// Color a string's foreground with the given value.
+func colorFg(val, color string) string {
+	return termenv.String(val).Foreground(term.Color(color)).String()
+}
+
+// Return a function that will colorize the foreground of a given string.
+func makeFgStyle(color string) func(string) string {
+	return termenv.Style{}.Foreground(term.Color(color)).Styled
+}
+
+func tickCmd() tea.Cmd {
+	return tea.Tick(time.Second*1, func(t time.Time) tea.Msg {
+		return tickMsg(t)
+	})
 }
 
 
@@ -230,28 +240,3 @@ func main() {
 
 // 	return fmt.Sprintf(tpl, choices,  "")
 // }
-
-func checkbox(label string, checked bool) string {
-	if checked {
-		return colorFg("[x] "+label, "212")
-	}
-	return fmt.Sprintf("[ ] %s", label)
-}
-
-// Utils
-
-// Color a string's foreground with the given value.
-func colorFg(val, color string) string {
-	return termenv.String(val).Foreground(term.Color(color)).String()
-}
-
-// Return a function that will colorize the foreground of a given string.
-func makeFgStyle(color string) func(string) string {
-	return termenv.Style{}.Foreground(term.Color(color)).Styled
-}
-
-func tickCmd() tea.Cmd {
-	return tea.Tick(time.Second*1, func(t time.Time) tea.Msg {
-		return tickMsg(t)
-	})
-}

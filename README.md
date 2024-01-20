@@ -2,6 +2,18 @@
 
 Create project init
 
+## Commands
+
+- go mod init <name> # inits project
+
+- go run .
+
+- go get <github package>
+
+- go mod tidy
+
+
+
 ### Auslagern
 
 as long as in same package i can split stuff

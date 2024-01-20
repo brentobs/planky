@@ -6,7 +6,7 @@ var nodeTypes = []string{"Express", "NestJS", "CLI"}
 var javaTypes = []string{"Spring", "Bla", "CLI"}
 var goTypes = []string{"a", "b", "CLI"}
 var languageTypes = map[string][]string{
-    "Python": {"FastAPI", "Django", "CLI"},
+    "Python": {"FastAPI", "Django", "CLI", "4th", "5th"},
     "NodeJS": {"Express", "NestJS", "CLI"},
     "Java":   {"Spring", "Bla", "CLI"},
     "Go":     {"a", "b", "CLI"},

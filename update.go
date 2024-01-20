@@ -1,6 +1,9 @@
 package main
 
-import ("github.com/charmbracelet/bubbletea")
+import (
+
+	"github.com/charmbracelet/bubbletea"
+)
 
 func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	if msg, ok := msg.(tea.KeyMsg); ok {
@@ -27,8 +30,8 @@ func updateLanguage(msg tea.Msg, m model) (tea.Model, tea.Cmd) {
 		switch msg.String() {
 		case "j", "down":
 			m.LangChoice++
-			if m.LangChoice > 3 {
-				m.LangChoice = 3
+			if m.LangChoice > len(languageTypes)-1 {
+				m.LangChoice = len(languageTypes)-1
 			}
 		case "k", "up":
 			m.LangChoice--
@@ -47,11 +50,13 @@ func updateLanguage(msg tea.Msg, m model) (tea.Model, tea.Cmd) {
 func updateLanguageType(msg tea.Msg, m model) (tea.Model, tea.Cmd) {
 	switch msg := msg.(type) {
 	case tea.KeyMsg:
+  selectedLanguage := languages[m.LangChoice] // Get the selected language
+	selectedTypes := languageTypes[selectedLanguage] // Get the corresponding types
 		switch msg.String() {
 		case "j", "down":
 			m.TypeChoice++
-			if m.TypeChoice > 3 {
-				m.TypeChoice = 3
+			if m.TypeChoice > len(selectedTypes)-1 {
+				m.TypeChoice = len(selectedTypes)-1
 			}
 		case "k", "up":
 			m.TypeChoice--

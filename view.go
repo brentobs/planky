@@ -48,6 +48,8 @@ func languageTypeView(m model) string {
 
   selectedLanguage := languages[lang] // Get the selected language
 	selectedTypes := languageTypes[selectedLanguage] // Get the corresponding types
+ //  fmt.Println(selectedLanguage)
+ //  fmt.Println(selectedTypes)
 
   var choices string
   for i, t := range selectedTypes{
